@@ -26,7 +26,15 @@ public class TeamController {
     @GetMapping("/get-team-members")
     public List<User> getTeamMembers(Integer team_id)
     {
-        return teamService.getTeamMembers().stream().toList();
+        return (List<User>) teamService.getTeamMembers(team_id);
     }
+
+    // Add Methods
+
+    // Read Methods
+
+    // Delete Methods
+
+    // Update Methods
 
 }
