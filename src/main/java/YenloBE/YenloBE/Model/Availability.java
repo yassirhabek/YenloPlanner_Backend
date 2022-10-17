@@ -11,7 +11,7 @@ public class Availability {
 
     @ManyToOne
     public User User;
-    public Integer UserId;
+    public Integer UserFK;
 
     public Integer Status;
     public Date DateTime;
@@ -24,7 +24,7 @@ public class Availability {
     public Availability(int id, YenloBE.YenloBE.Model.User user, Integer userId, Integer status, Date dateTime, Boolean beforeMidday) {
         Id = id;
         User = user;
-        UserId = userId;
+        UserFK = userId;
         Status = status;
         DateTime = dateTime;
         BeforeMidday = beforeMidday;
@@ -47,11 +47,11 @@ public class Availability {
     }
 
     public Integer getUserId() {
-        return UserId;
+        return UserFK;
     }
 
     public void setUserId(Integer userId) {
-        UserId = userId;
+        UserFK = userId;
     }
 
     public Integer getStatus() {

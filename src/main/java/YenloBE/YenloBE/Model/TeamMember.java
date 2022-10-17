@@ -11,11 +11,11 @@ public class TeamMember {
 
     @ManyToOne
     public User User;
-    public Integer UserId;
+    public Integer UserFK;
 
     @ManyToOne
     public Team Team;
-    public Integer TeamId;
+    public Integer TeamFK;
 
     public TeamMember()
     {
@@ -24,9 +24,9 @@ public class TeamMember {
     public TeamMember(int id, User member, Integer userId, Team team, Integer teamId) {
         Id = id;
         User = member;
-        UserId = userId;
+        UserFK = userId;
         Team = team;
-        TeamId = teamId;
+        TeamFK = teamId;
     }
 
     public int getId() {
@@ -46,11 +46,11 @@ public class TeamMember {
     }
 
     public Integer getUserId() {
-        return UserId;
+        return UserFK;
     }
 
     public void setUserId(Integer userId) {
-        UserId = userId;
+        UserFK = userId;
     }
 
     public YenloBE.YenloBE.Model.Team getTeam() {
@@ -62,10 +62,10 @@ public class TeamMember {
     }
 
     public Integer getTeamId() {
-        return TeamId;
+        return TeamFK;
     }
 
     public void setTeamId(Integer teamId) {
-        TeamId = teamId;
+        TeamFK = teamId;
     }
 }
