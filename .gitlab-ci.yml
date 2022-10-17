@@ -1,0 +1,44 @@
+variables:
+  IMAGE_NAME: yenlogroep2/yenlobackend
+  IMAGE_TAG: yenloplanner_v1.0
+
+stages:
+  - test
+  - quality
+  - build
+
+include:
+  - template: Code-Quality.gitlab-ci.yml
+
+run_tests:
+  image:
+    name: maven:3.8.1-adoptopenjdk-18.0.2
+  stage: test
+  script:
+    - mvn clean
+    - mvn verify test
+
+code_quality:
+  stage: quality
+  tags:
+    - <<<<<<<<<<<RUNNER>>>>>>>>>>>>>
+  artifacts:
+    paths: [gl-code-quality-report.json]
+
+cache:
+  paths:
+    - .m2/repository/
+    - target/
+
+build_image:
+  stage: build
+  image: docker:22.06-rc-cli
+  services:
+    - docker:22.06-rc-dind
+  variables:
+    DICJER_TLS_CERTDIR: "/certs"
+  before_script:
+    - echo $REGISTRY_PASS | docker login -u $REGISTRY_USER --password-stdin
+  script:
+    - docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+    - docker push ${IMAGE_NAME}:${IMAGE_TAG}
