@@ -21,7 +21,7 @@ run_tests:
 code_quality:
   stage: quality
   tags:
-    - <<<<<<<<<<<RUNNER>>>>>>>>>>>>>
+    - quality-control-runner
   artifacts:
     paths: [gl-code-quality-report.json]
 
