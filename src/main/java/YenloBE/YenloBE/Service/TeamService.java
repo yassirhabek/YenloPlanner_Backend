@@ -5,6 +5,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface TeamService {
-    public Team addTeam(Team team);
+    public String addTeam(Team team);
     public Team getTeamMembers(Integer teamId);
 }

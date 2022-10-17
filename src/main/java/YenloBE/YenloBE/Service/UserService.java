@@ -1,22 +1,20 @@
 package YenloBE.YenloBE.Service;
 
-import YenloBE.YenloBE.Exception.ResourceNotFoundException;
 import YenloBE.YenloBE.Model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public interface UserService {
     List<User> getAllUsers();
 
-    User createUser(User user);
+    String createUser(User user);
 
-    ResponseEntity<User> findById(Integer id) throws ResourceNotFoundException;
+    User findById(Integer id);
 
-    User updateUser(User user);
+    String updateUser(User user, User userDetails);
 
     String deleteUser(User user);
 }

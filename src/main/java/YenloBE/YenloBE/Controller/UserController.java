@@ -1,8 +1,7 @@
 package YenloBE.YenloBE.Controller;
 
-import YenloBE.YenloBE.Exception.ResourceNotFoundException;
+import YenloBE.YenloBE.Exception.ApiRequestException;
 import YenloBE.YenloBE.Model.User;
-import YenloBE.YenloBE.Repo.UserRepo;
 import YenloBE.YenloBE.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,7 @@ public class UserController {
 
     // Add Methods
     @PostMapping("/create")
-    public User createUser(@Valid @RequestBody User user) {
+    public String createUser(@Valid @RequestBody User user) {
         return userService.createUser(user);
     }
 
@@ -31,27 +30,41 @@ public class UserController {
     }
 
     @GetMapping("/id")
-    public ResponseEntity<User> getUserByID(Integer id) throws ResourceNotFoundException{
-        return userService.findById(id);
+    public User getUserByID(Integer id) throws ApiRequestException{
+        if (userService.findById(id) == null) {
+            throw new ApiRequestException("User by ID " + id + "not found.");
+        }
+        else {
+            return userService.findById(id);
+        }
     }
 
     // Delete Methods
     @DeleteMapping("/delete")
-    public String deleteUser(Integer id) throws ResourceNotFoundException {
-        User user = userService.findById(id).getBody();
-        userService.deleteUser(user);
-        return "Deleted user";
+    public String deleteUser(Integer id) throws ApiRequestException {
+        if (userService.findById(id) == null)
+        {
+            throw new ApiRequestException("User by ID " + id + "not found.");
+        }
+        else
+        {
+            return userService.deleteUser(userService.findById(id));
+        }
     }
-
 
     // Update Methods
     @PutMapping("/update")
-    public User updateUser(Integer id, @RequestBody User userDetails) throws ResourceNotFoundException {
-        User user = userService.findById(id).getBody();
-        user.setEmail(userDetails.getEmail());
-        user.setManager(userDetails.getManager());
-        user.setName(userDetails.getName());
-        user.setPassword(userDetails.getName());
-        return userService.updateUser(user);
+    public String updateUser(Integer id, @RequestBody User userDetails) throws ApiRequestException {
+        if (userService.findById(id) == null) {
+            throw new ApiRequestException("User by ID " + id + "not found.");
+        }
+        else {
+            User user = userService.findById(id);
+            user.setEmail(userDetails.getEmail());
+            user.setManager(userDetails.getManager());
+            user.setName(userDetails.getName());
+            user.setPassword(userDetails.getName());
+            return userService.updateUser(user, userDetails);
+        }
     }
 }

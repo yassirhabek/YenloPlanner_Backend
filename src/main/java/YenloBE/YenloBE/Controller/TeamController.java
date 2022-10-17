@@ -16,13 +16,6 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
-    @PostMapping("/add-team")
-    public String addTeam(@RequestBody Team team)
-    {
-        teamService.addTeam(team);
-        return "Team added.";
-    }
-
     @GetMapping("/get-team-members")
     public List<User> getTeamMembers(Integer team_id)
     {
@@ -30,6 +23,11 @@ public class TeamController {
     }
 
     // Add Methods
+    @PostMapping("/add-team")
+    public String addTeam(@RequestBody Team team)
+    {
+        return teamService.addTeam(team);
+    }
 
     // Read Methods
 
