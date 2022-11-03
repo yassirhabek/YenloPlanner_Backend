@@ -1,60 +1,35 @@
 package YenloBE.YenloBE.Model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.mapping.Set;
+
 import javax.persistence.*;
 import java.util.Date;
 
+
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Availability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int Id;
-
-    @ManyToOne
+    @OneToOne
     public User User;
     public Integer Status;
     public Date DateTime;
     public Boolean BeforeMidday = false;
 
-    public Availability()
-    {
-    }
-
-    public Availability(int id, YenloBE.YenloBE.Model.User user, Integer status, Date dateTime, Boolean beforeMidday) {
+    public Availability(int id, User userid, Integer status, Date dateTime, Boolean beforeMidday) {
         Id = id;
-        User = user;
+        User = userid;
         Status = status;
         DateTime = dateTime;
-        BeforeMidday = beforeMidday;
-    }
-
-    public int getId() {
-        return Id;
-    }
-    public void setId(int id) {
-        Id = id;
-    }
-    public YenloBE.YenloBE.Model.User getUser() {
-        return User;
-    }
-    public void setUser(YenloBE.YenloBE.Model.User user) {
-        User = user;
-    }
-    public Integer getStatus() {
-        return Status;
-    }
-    public void setStatus(Integer status) {
-        Status = status;
-    }
-    public Date getDateTime() {
-        return DateTime;
-    }
-    public void setDateTime(Date dateTime) {
-        DateTime = dateTime;
-    }
-    public Boolean getBeforeMidday() {
-        return BeforeMidday;
-    }
-    public void setBeforeMidday(Boolean beforeMidday) {
         BeforeMidday = beforeMidday;
     }
 }

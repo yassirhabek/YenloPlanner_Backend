@@ -63,26 +63,6 @@ public class UserServiceImpl implements UserService{
     // Checks
     public Boolean checkUserExists(User newUser)
     {
-        // check if the email or username exists within the database
-        if (!checkEmailExists(newUser.getEmail()) && !checkUsernameExists(newUser.getName())) {
-            return false;
-        }
-        return true; // return true if no such user details exist
-    }
-
-    public Boolean checkEmailExists(String email)
-    {
-        if (userRepo.findByEmail(email) == null) {
-            return false;
-        }
-        return true;
-    }
-
-    public Boolean checkUsernameExists(String username)
-    {
-        if (userRepo.findByUsername(username) == null) {
-            return false;
-        }
-        return true;
+        return false; // returns false for now, will fix later
     }
 }

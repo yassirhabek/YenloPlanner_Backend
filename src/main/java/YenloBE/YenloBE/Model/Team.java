@@ -1,9 +1,18 @@
 package YenloBE.YenloBE.Model;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -11,28 +20,11 @@ public class Team {
     @Column(length = 255)
     public String Name;
 
-    public Team()
-    {
-    }
+    @ManyToMany(cascade = CascadeType.ALL)
+    public List<User> user;
 
     public Team(int id, String name) {
         Id = id;
-        Name = name;
-    }
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
-
-    public String getName() {
-        return Name;
-    }
-
-    public void setName(String name) {
         Name = name;
     }
 }

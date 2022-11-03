@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "team") // api path
+@RequestMapping(path = "/team") // api path
 @CrossOrigin
 public class TeamController {
 

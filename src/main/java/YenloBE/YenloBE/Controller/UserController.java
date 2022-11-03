@@ -18,21 +18,21 @@ public class UserController {
     private UserService userService;
 
     // Add Methods
-    @PostMapping("/create")
+    @PostMapping
     public String createUser(@Valid @RequestBody User user) {
         return userService.createUser(user);
     }
 
     // Read Methods
-    @GetMapping("/list")
+    @GetMapping
     public List<User> getAllUsers() {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/id")
-    public User getUserByID(Integer id) throws ApiRequestException{
+    @GetMapping("/{id}")
+    public User findById(@PathVariable Integer id) throws ApiRequestException {
         if (userService.findById(id) == null) {
-            throw new ApiRequestException("User by ID " + id + "not found.");
+            throw new ApiRequestException("User not found by ID " + id);
         }
         else {
             return userService.findById(id);
@@ -40,11 +40,11 @@ public class UserController {
     }
 
     // Delete Methods
-    @DeleteMapping("/delete")
+    @DeleteMapping
     public String deleteUser(Integer id) throws ApiRequestException {
         if (userService.findById(id) == null)
         {
-            throw new ApiRequestException("User by ID " + id + "not found.");
+            throw new ApiRequestException("User not found by ID " + id);
         }
         else
         {
@@ -53,10 +53,10 @@ public class UserController {
     }
 
     // Update Methods
-    @PutMapping("/update")
+    @PutMapping
     public String updateUser(Integer id, @RequestBody User userDetails) throws ApiRequestException {
         if (userService.findById(id) == null) {
-            throw new ApiRequestException("User by ID " + id + "not found.");
+            throw new ApiRequestException("User not found by ID " + id);
         }
         else {
             User user = userService.findById(id);
