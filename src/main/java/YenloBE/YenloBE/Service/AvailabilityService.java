@@ -10,4 +10,8 @@ import java.util.Optional;
 @Service
 public interface AvailabilityService {
     Optional<List<Availability>> getAvailabilityOneDay(String date, Integer user_id);
+
+    Optional<List<Availability>> getAvailabilityOneWeek(String begin_date, Integer user_id);
+
+    Optional<List<Availability>> getAvailabilityOneMonth(String begin_date, Integer user_id);
 }

@@ -27,17 +27,17 @@ public class AvailabilityController {
                 .orElseThrow(()-> new ApiRequestException("No records found."));
     }
 
-//    @GetMapping("/week/{start_date}/{user_id}")
-//    public Availability getAvailabilityOneWeek(@RequestParam Date start_date, @RequestParam Integer user_id) throws ApiRequestException {
-//        return availabilityService.getAvailabilityOneWeek(start_date, user_id)
-//                .orElseThrow(()-> new ApiRequestException("No records found."));
-//    }
-//
-//    @GetMapping("/month/{start_date}/{user_id}")
-//    public Availability getAvailabilityOneMonth(@RequestParam Date start_date, @RequestParam Integer user_id) throws ApiRequestException {
-//        return availabilityService.getAvailabilityOneMonth(start_date, user_id)
-//                .orElseThrow(()-> new ApiRequestException("No records found."));
-//    }
+    @GetMapping("/week")
+    public List<Availability> getAvailabilityOneWeek(@RequestParam String begin_date, @RequestParam Integer user_id) throws ApiRequestException {
+        return availabilityService.getAvailabilityOneWeek(begin_date, user_id)
+                .orElseThrow(()-> new ApiRequestException("No records found."));
+    }
+
+    @GetMapping("/month")
+    public List<Availability> getAvailabilityOneMonth(@RequestParam String begin_date, @RequestParam Integer user_id) throws ApiRequestException {
+        return availabilityService.getAvailabilityOneMonth(begin_date, user_id)
+                .orElseThrow(()-> new ApiRequestException("No records found."));
+    }
 
     // Delete Methods
 

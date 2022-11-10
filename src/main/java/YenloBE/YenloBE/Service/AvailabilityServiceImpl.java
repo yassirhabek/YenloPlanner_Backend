@@ -19,4 +19,14 @@ public class AvailabilityServiceImpl implements AvailabilityService{
     public Optional<List<Availability>> getAvailabilityOneDay(String date, Integer user_id) {
         return Optional.ofNullable(availabilityRepo.findAllByDateTimeAndUserId(date, user_id));
     }
+
+    @Override
+    public Optional<List<Availability>> getAvailabilityOneWeek(String begin_date, Integer user_id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<List<Availability>> getAvailabilityOneMonth(String begin_date, Integer user_id) {
+        return Optional.empty();
+    }
 }
