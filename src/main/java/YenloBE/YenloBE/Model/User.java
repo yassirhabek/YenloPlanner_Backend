@@ -17,32 +17,26 @@ import java.util.List;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private int id;
     @Column(length = 255)
-    public String Email;
+    public String email;
     @Column(length = 255)
-    public String Password;
+    public String password;
     @Column(length = 255)
-    public String Name;
+    public String name;
     @Column(length = 255)
-    public String PhotoId;
-    public Boolean IsManager = false;
+    public String photoId;
+    public Boolean isManager = false;
 
+    @OneToMany(mappedBy = "id")
+    public List<Availability> availabilities;
 
     public User(int id, String email, String password, String name, Boolean isManager, String photoid) {
-        Id = id;
-        Email = email;
-        Password = password;
-        Name = name;
-        IsManager = isManager;
-        PhotoId = photoid;
-    }
-
-    public Boolean getManager() {
-        return IsManager;
-    }
-
-    public void setManager(Boolean manager) {
-        IsManager = manager;
+        this.id = id;
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.isManager = isManager;
+        this.photoId = photoid;
     }
 }

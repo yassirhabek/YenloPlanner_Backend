@@ -39,6 +39,12 @@ public class UserController {
         }
     }
 
+//    @GetMapping("/{username}")
+//    public User findByUsername(@PathVariable String username) throws ApiRequestException {
+//        return userService.findByUsername(username)
+//                .orElseThrow(()-> new ApiRequestException("No records found."));
+//    }
+
     // Delete Methods
     @DeleteMapping
     public String deleteUser(Integer id) throws ApiRequestException {
@@ -61,7 +67,7 @@ public class UserController {
         else {
             User user = userService.findById(id);
             user.setEmail(userDetails.getEmail());
-            user.setManager(userDetails.getManager());
+            user.setIsManager(userDetails.getIsManager());
             user.setName(userDetails.getName());
             user.setPassword(userDetails.getName());
             return userService.updateUser(user, userDetails);

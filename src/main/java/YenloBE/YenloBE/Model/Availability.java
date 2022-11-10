@@ -18,18 +18,19 @@ import java.util.Date;
 public class Availability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int Id;
+    private int id;
     @OneToOne
-    public User User;
-    public Integer Status;
-    public Date DateTime;
-    public Boolean BeforeMidday = false;
+    public User user;
+    public Integer status;
+    @Column(length = 10)
+    public String dateTime;
+    public Boolean beforeMidday = false;
 
-    public Availability(int id, User userid, Integer status, Date dateTime, Boolean beforeMidday) {
-        Id = id;
-        User = userid;
-        Status = status;
-        DateTime = dateTime;
-        BeforeMidday = beforeMidday;
+    public Availability(int id, User userid, Integer status, String _dateTime, Boolean _beforeMidday) {
+        this.id = id;
+        user = userid;
+        this.status = status;
+        dateTime = _dateTime;
+        beforeMidday = _beforeMidday;
     }
 }
