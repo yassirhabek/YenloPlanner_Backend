@@ -60,6 +60,11 @@ public class UserServiceImpl implements UserService{
         return "Deleted user";
     }
 
+    @Override
+    public User findByName(String username) {
+        return userRepo.findByName(username);
+    }
+
     // Checks
     public Boolean checkUserExists(User newUser)
     {
