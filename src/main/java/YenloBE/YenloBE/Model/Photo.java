@@ -15,6 +15,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Photo {
     @Id
     private String id;
-    private String Title;
-    private Binary Data;
+    private String title;
+    private Binary data;
 }

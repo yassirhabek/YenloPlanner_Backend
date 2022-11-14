@@ -5,8 +5,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.mapping.Set;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.text.DateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -22,15 +25,15 @@ public class Availability {
     @OneToOne
     public User user;
     public Integer status;
-    @Column(length = 10)
-    public String dateTime;
+    @DateTimeFormat(pattern="yyyy/MM/dd")
+    public Date dateTime;
     public Boolean beforeMidday = false;
 
-    public Availability(int id, User userid, Integer status, String _dateTime, Boolean _beforeMidday) {
+    public Availability(int id, User userid, Integer status, Date dateTime, Boolean _beforeMidday) {
         this.id = id;
-        user = userid;
+        this.user = userid;
         this.status = status;
-        dateTime = _dateTime;
-        beforeMidday = _beforeMidday;
+        this.dateTime = dateTime;
+        this.beforeMidday = _beforeMidday;
     }
 }
