@@ -16,10 +16,15 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
-    @GetMapping("/get-team-members")
-    public List<User> getTeamMembers(Integer team_id)
+    @GetMapping("{id}")
+    public Team getTeam(@PathVariable Integer id) {
+        return teamService.findById(id).get();
+    }
+
+    @GetMapping
+    public List<Team> getTeams()
     {
-        return (List<User>) teamService.getTeamMembers(team_id);
+        return teamService.getAll();
     }
 
     // Add Methods
