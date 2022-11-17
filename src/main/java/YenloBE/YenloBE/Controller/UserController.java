@@ -32,10 +32,20 @@ public class UserController {
     @GetMapping("/{id}")
     public User findById(@PathVariable Integer id) throws ApiRequestException {
         if (userService.findById(id) == null) {
-            throw new ApiRequestException("User not found by ID " + id);
+            throw new ApiRequestException("No records found.");
         }
         else {
             return userService.findById(id);
+        }
+    }
+
+    @GetMapping("/name")
+    public User findByName(@RequestParam String name) throws ApiRequestException {
+        if (userService.findByName(name) == null) {
+            throw new ApiRequestException("No records found.");
+        }
+        else {
+            return userService.findByName(name);
         }
     }
 

@@ -20,7 +20,14 @@ public class Team {
     @Column(length = 255)
     public String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "team_member",
+        joinColumns = {
+            @JoinColumn(name = "team_id", referencedColumnName = "id")
+        },
+        inverseJoinColumns = {
+            @JoinColumn(name = "user_id", referencedColumnName = "id")
+        })
     public List<User> user;
 
     public Team(int id, String name) {
