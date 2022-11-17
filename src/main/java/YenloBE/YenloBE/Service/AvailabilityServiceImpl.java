@@ -34,7 +34,18 @@ public class AvailabilityServiceImpl implements AvailabilityService{
 
     @Override
     public Optional<List<Availability>> getAvailabilityOneWeek(Date begin_date, Integer user_id) {
-        return Optional.empty();
+        List<Availability> availabilities = null;
+        Date weekDate = begin_date;
+        for (int i = 0; i < 5; i++) {
+            for (Availability a:availabilityRepo.findAllByDateTimeAndUserId(weekDate, user_id)) {
+                availabilities.add(a);
+            };
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(weekDate);
+            cal.add(Calendar.DATE, 1);
+            weekDate = cal.getTime();
+        }
+        return Optional.ofNullable(availabilities);
     }
 
     @Override

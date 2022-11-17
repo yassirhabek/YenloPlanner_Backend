@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -54,9 +53,14 @@ public class AvailabilityController {
     }
 
     @GetMapping("/week")
-    public List<Availability> getAvailabilityOneWeek(@RequestParam Date begin_date, @RequestParam Integer user_id) throws ApiRequestException {
-        return availabilityService.getAvailabilityOneWeek(begin_date, user_id)
-                .orElseThrow(()-> new ApiRequestException("No records found."));
+    public List<Availability> getAvailabilityOneWeek(@RequestParam String date, @RequestParam Integer user_id) throws ApiRequestException, ParseException {
+        if (date != null && user_id != null ) {
+            Date date1 = (new SimpleDateFormat("yyyy/MM/dd").parse(date));
+            return availabilityService.getAvailabilityOneWeek(date1, user_id)
+                    .orElseThrow(()-> new ApiRequestException("No records found."));
+        } else {
+            return null;
+        }
     }
 
     @GetMapping("/month")
