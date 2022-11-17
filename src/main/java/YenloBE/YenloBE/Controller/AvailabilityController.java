@@ -1,7 +1,10 @@
 package YenloBE.YenloBE.Controller;
 
+import YenloBE.YenloBE.DTO.AvailabilityDto;
+import YenloBE.YenloBE.DTO.UserDTO;
 import YenloBE.YenloBE.Exception.ApiRequestException;
 import YenloBE.YenloBE.Model.Availability;
+import YenloBE.YenloBE.Model.User;
 import YenloBE.YenloBE.Service.AvailabilityService;
 import YenloBE.YenloBE.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "/availability") // api path
@@ -42,22 +44,28 @@ public class AvailabilityController {
 
     // Read Methods
     @GetMapping("/day")
-    public List<Availability> getAvailabilityOneDay(@RequestParam String date, @RequestParam Integer user_id) throws ApiRequestException, ParseException {
+    public UserDTO getAvailabilityOneDay(@RequestParam String date, @RequestParam Integer user_id) throws ApiRequestException, ParseException {
         if (date != null && user_id != null ) {
             Date date1 = (new SimpleDateFormat("yyyy/MM/dd").parse(date));
-            return availabilityService.getAvailabilityOneDay(date1, user_id)
-                    .orElseThrow(()-> new ApiRequestException("No records found."));
+
+            User user = userService.findById(user_id);
+            user.setAvailabilities(availabilityService.getAvailabilityOneDay(date1, user_id).orElseThrow());
+            UserDTO u = new UserDTO(user);
+            return u;
         } else {
             return null;
         }
     }
 
     @GetMapping("/week")
-    public List<Availability> getAvailabilityOneWeek(@RequestParam String date, @RequestParam Integer user_id) throws ApiRequestException, ParseException {
+    public UserDTO getAvailabilityOneWeek(@RequestParam String date, @RequestParam Integer user_id) throws ApiRequestException, ParseException {
         if (date != null && user_id != null ) {
             Date date1 = (new SimpleDateFormat("yyyy/MM/dd").parse(date));
-            return availabilityService.getAvailabilityOneWeek(date1, user_id)
-                    .orElseThrow(()-> new ApiRequestException("No records found."));
+
+            User user = userService.findById(user_id);
+            user.setAvailabilities(availabilityService.getAvailabilityOneWeek(date1, user_id).orElseThrow());
+            UserDTO u = new UserDTO(user);
+            return u;
         } else {
             return null;
         }

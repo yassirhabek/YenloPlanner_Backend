@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class AvailabilityServiceImpl implements AvailabilityService{
@@ -34,7 +31,7 @@ public class AvailabilityServiceImpl implements AvailabilityService{
 
     @Override
     public Optional<List<Availability>> getAvailabilityOneWeek(Date begin_date, Integer user_id) {
-        List<Availability> availabilities = null;
+        List<Availability> availabilities = new ArrayList<>();
         Date weekDate = begin_date;
         for (int i = 0; i < 5; i++) {
             for (Availability a:availabilityRepo.findAllByDateTimeAndUserId(weekDate, user_id)) {
