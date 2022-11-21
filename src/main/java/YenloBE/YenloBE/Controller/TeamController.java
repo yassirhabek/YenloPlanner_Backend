@@ -42,13 +42,14 @@ public class TeamController {
     // Read Methods
 
     @GetMapping("/user-teams")
-    public List<Team> getUserTeams(@RequestParam Integer teamId, @RequestParam Integer userId) {
-        return teamService.getUserTeams(teamId, userId);
+    public List<Team> getUserTeams(@RequestParam Integer userId) {
+        User user = userService.findById(userId);
+        return teamService.getUserTeams(user);
     }
 
     // Delete Methods
 
-    @DeleteMapping("/team/user")
+    @DeleteMapping("/user")
     public Team removeUserFromTeam(@RequestParam Integer teamId, @RequestParam Integer userId) throws ApiRequestException {
         if (teamService.findById(teamId) != null && userService.findById(userId) != null) {
             Optional<Team> team = teamService.findById(teamId);
@@ -73,7 +74,7 @@ public class TeamController {
         }
     }
 
-    @PostMapping("/add-team-user")
+    @PostMapping("/user")
     public Team addTeamUser(Integer teamId, Integer userId) throws ApiRequestException {
         if (teamService.findById(teamId) != null && userService.findById(userId) != null) {
             Optional<Team> team = teamService.findById(teamId);

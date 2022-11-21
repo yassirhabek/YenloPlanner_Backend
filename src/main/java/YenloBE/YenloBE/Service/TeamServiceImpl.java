@@ -1,6 +1,7 @@
 package YenloBE.YenloBE.Service;
 
 import YenloBE.YenloBE.Model.Team;
+import YenloBE.YenloBE.Model.User;
 import YenloBE.YenloBE.Repo.TeamRepo;
 import YenloBE.YenloBE.Repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +44,8 @@ public class TeamServiceImpl implements TeamService{
     }
 
     @Override
-    public List<Team> getUserTeams(Integer teamId, Integer userId) {
-//        return teamRepo.findTeamsById(teamId, userId);
-        return null;
+    public List<Team> getUserTeams(User user) {
+        return teamRepo.findAllByUser(user);
     }
 
     @Override
