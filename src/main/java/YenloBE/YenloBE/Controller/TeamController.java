@@ -4,6 +4,7 @@ import YenloBE.YenloBE.Exception.ApiRequestException;
 import YenloBE.YenloBE.Model.Team;
 import YenloBE.YenloBE.Model.User;
 import YenloBE.YenloBE.Service.TeamService;
+import YenloBE.YenloBE.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,8 @@ public class TeamController {
 
     @Autowired
     private TeamService teamService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/{id}")
     public Team getTeam(@PathVariable Integer id) {
@@ -46,8 +49,16 @@ public class TeamController {
     // Delete Methods
 
     @DeleteMapping("/team/user")
-    public String removeUserFromTeam(@RequestParam Integer teamId, @RequestParam Integer userId) throws ApiRequestException {
-        return teamService.deleteUserFromTeam(teamId, userId);
+    public Team removeUserFromTeam(@RequestParam Integer teamId, @RequestParam Integer userId) throws ApiRequestException {
+        if (teamService.findById(teamId) != null && userService.findById(userId) != null) {
+            Optional<Team> team = teamService.findById(teamId);
+            User user = userService.findById(userId);
+            team.get().user.remove(user);
+            return teamService.deleteUserFromTeam(team.get());
+        }
+        else {
+            throw new ApiRequestException("No records found.");
+        }
     }
 
     // Update Methods
@@ -59,6 +70,19 @@ public class TeamController {
         }
         else {
             throw new ApiRequestException("No records found to update.");
+        }
+    }
+
+    @PostMapping("/add-team-user")
+    public Team addTeamUser(Integer teamId, Integer userId) throws ApiRequestException {
+        if (teamService.findById(teamId) != null && userService.findById(userId) != null) {
+            Optional<Team> team = teamService.findById(teamId);
+            User user = userService.findById(userId);
+            team.get().user.add(user);
+            return teamService.addTeamUser(team.get());
+        }
+        else {
+            throw new ApiRequestException("No records found.");
         }
     }
 }
