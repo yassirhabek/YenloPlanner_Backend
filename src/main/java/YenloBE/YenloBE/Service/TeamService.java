@@ -13,9 +13,11 @@ public interface TeamService {
     List<Team> getAll();
     Optional<Team> findById(Integer id);
 
-    String deleteUserFromTeam(Integer teamId, Integer userId);
+    Team deleteUserFromTeam(Team team);
 
     List<Team> getUserTeams(Integer teamId, Integer userId);
 
     Team updateTeam(Team team, Team teamDetails);
+
+    Team addTeamUser(Team team);
 }

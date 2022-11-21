@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface TeamRepo extends JpaRepository<Team, Integer> {
-    List<Team> findTeamsFromUser(Integer teamId, Integer userId);
+//    List<Team> findTeamsFromUser(Integer teamId, Integer userId);
 }

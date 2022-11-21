@@ -38,24 +38,24 @@ public class TeamServiceImpl implements TeamService{
     }
 
     @Override
-    public String deleteUserFromTeam(Integer teamId, Integer userId) {
-        if (teamRepo.findById(teamId) != null) {
-            teamRepo.deleteTeamByUser(teamId, userId);
-            return "Deleted instance.";
-        }
-        else {
-            return "Instance not found.";
-        }
+    public Team deleteUserFromTeam(Team team) {
+        return teamRepo.save(team);
     }
 
     @Override
     public List<Team> getUserTeams(Integer teamId, Integer userId) {
-        return teamRepo.findTeamsById(teamId, userId);
+//        return teamRepo.findTeamsById(teamId, userId);
+        return null;
     }
 
     @Override
     public Team updateTeam(Team team, Team teamDetails) {
         team.setName(teamDetails.getName());
+        return teamRepo.save(team);
+    }
+
+    @Override
+    public Team addTeamUser(Team team) {
         return teamRepo.save(team);
     }
 
