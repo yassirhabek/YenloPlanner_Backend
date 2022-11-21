@@ -22,6 +22,7 @@ public class Availability {
     @OneToOne
     public User user;
     public Integer status;
+    //public Enum<> status;
     @DateTimeFormat(pattern = "yyyy.MM.dd")
     public Date dateTime;
     public Boolean beforeMidday = false;

@@ -48,15 +48,9 @@ public class AvailabilityServiceImpl implements AvailabilityService{
     @Override
     public Optional<List<Availability>> getAvailabilityBetween(Integer user_id, Date start_date, Date end_date) {
         List<Availability> availabilities = new ArrayList<>();
-        Date sd = start_date;
-        Date ed = end_date;
-
         for (Availability a:availabilityRepo.findByUserIdAndDateTimeBetween(user_id, start_date, end_date)) {
-            Calendar cal = Calendar.getInstance();
-            //cal.setTime();
             availabilities.add(a);
         }
-
         return Optional.ofNullable(availabilities);
     }
 }
