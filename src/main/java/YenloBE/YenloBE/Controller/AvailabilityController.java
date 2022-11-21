@@ -71,10 +71,19 @@ public class AvailabilityController {
         }
     }
 
-    @GetMapping("/month")
-    public List<Availability> getAvailabilityOneMonth(@RequestParam Date begin_date, @RequestParam Integer user_id) throws ApiRequestException {
-        return availabilityService.getAvailabilityOneMonth(begin_date, user_id)
-                .orElseThrow(()-> new ApiRequestException("No records found."));
+    @GetMapping("/between")
+    public UserDTO getAvailabilityBetween(@RequestParam Integer user_id, @RequestParam String start_date, @RequestParam String end_date) throws ApiRequestException, ParseException {
+        if (user_id != null && start_date != null && end_date != null) {
+            Date startDate = (new SimpleDateFormat("yyyy/MM/dd").parse(start_date));
+            Date endDate = (new SimpleDateFormat("yyyy/MM/dd").parse(end_date));
+
+            User user = userService.findById(user_id);
+            user.setAvailabilities(availabilityService.getAvailabilityBetween(user_id, startDate, endDate).orElseThrow());
+            UserDTO u = new UserDTO(user);
+            return u;
+        } else {
+            return null;
+        }
     }
 
     // Delete Methods
