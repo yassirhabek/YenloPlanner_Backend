@@ -4,12 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.mapping.Set;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 
@@ -25,7 +22,7 @@ public class Availability {
     @OneToOne
     public User user;
     public Integer status;
-    @DateTimeFormat(pattern="yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy.MM.dd")
     public Date dateTime;
     public Boolean beforeMidday = false;
 
@@ -36,4 +33,5 @@ public class Availability {
         this.dateTime = dateTime;
         this.beforeMidday = _beforeMidday;
     }
+
 }
