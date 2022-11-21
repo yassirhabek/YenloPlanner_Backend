@@ -1,5 +1,6 @@
 package YenloBE.YenloBE.Service;
 
+import YenloBE.YenloBE.Model.Team;
 import YenloBE.YenloBE.Model.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -19,4 +20,5 @@ public interface UserService {
     String deleteUser(User user);
 
     User findByName(String name);
+
 }

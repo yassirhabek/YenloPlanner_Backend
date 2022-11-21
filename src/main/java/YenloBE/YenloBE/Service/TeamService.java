@@ -12,4 +12,10 @@ public interface TeamService {
     String addTeam(Team team);
     List<Team> getAll();
     Optional<Team> findById(Integer id);
+
+    String deleteUserFromTeam(Integer teamId, Integer userId);
+
+    List<Team> getUserTeams(Integer teamId, Integer userId);
+
+    Team updateTeam(Team team, Team teamDetails);
 }

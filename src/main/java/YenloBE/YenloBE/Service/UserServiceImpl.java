@@ -1,6 +1,8 @@
 package YenloBE.YenloBE.Service;
 
+import YenloBE.YenloBE.Model.Team;
 import YenloBE.YenloBE.Model.User;
+import YenloBE.YenloBE.Repo.TeamRepo;
 import YenloBE.YenloBE.Repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepo userRepo;
+    @Autowired
+    private TeamRepo teamRepo;
 
     @Override
     public List<User> getAllUsers() {

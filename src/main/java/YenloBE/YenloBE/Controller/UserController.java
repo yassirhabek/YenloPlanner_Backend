@@ -1,6 +1,7 @@
 package YenloBE.YenloBE.Controller;
 
 import YenloBE.YenloBE.Exception.ApiRequestException;
+import YenloBE.YenloBE.Model.Team;
 import YenloBE.YenloBE.Model.User;
 import YenloBE.YenloBE.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,12 +50,6 @@ public class UserController {
         }
     }
 
-//    @GetMapping("/{username}")
-//    public User findByUsername(@PathVariable String username) throws ApiRequestException {
-//        return userService.findByUsername(username)
-//                .orElseThrow(()-> new ApiRequestException("No records found."));
-//    }
-
     // Delete Methods
     @DeleteMapping
     public String deleteUser(Integer id) throws ApiRequestException {
@@ -76,10 +71,6 @@ public class UserController {
         }
         else {
             User user = userService.findById(id);
-            user.setEmail(userDetails.getEmail());
-            user.setIsManager(userDetails.getIsManager());
-            user.setName(userDetails.getName());
-            user.setPassword(userDetails.getName());
             return userService.updateUser(user, userDetails);
         }
     }
