@@ -104,6 +104,6 @@ public class AvailabilityController {
         for (Availability a:availabilities) {
             this.updateAvailabilityDay(a);
         }
-        return "Availabilities updated";
+        return "Updated Availabilities";
     }
 }
