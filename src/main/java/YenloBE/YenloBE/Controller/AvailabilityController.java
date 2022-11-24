@@ -39,7 +39,7 @@ public class AvailabilityController {
         for (Availability a:availabilities) {
             this.addAvailabilityOneDay(a);
         }
-        return "Default Message";
+        return "Availabilities added";
     }
 
     // Read Methods
@@ -89,4 +89,21 @@ public class AvailabilityController {
     // Delete Methods
 
     // Update Methods
+    @PutMapping("/update/day")
+    public String updateAvailabilityDay(@RequestBody Availability availability){
+        if (userService.findById(availability.getId()) == null){
+            return "No availability found for id: " + availability.getId();
+        } else {
+            availabilityService.updateAvailabilityDay(availability);
+            return "Availability updated";
+        }
+    }
+
+    @PutMapping("/update/month/{id}")
+    public String updateAvailabilityMonth(@RequestBody List<Availability> availabilities){
+        for (Availability a:availabilities) {
+            this.updateAvailabilityDay(a);
+        }
+        return "Availabilities updated";
+    }
 }

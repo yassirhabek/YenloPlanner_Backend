@@ -19,14 +19,20 @@ public class UserDTO {
         for (Availability a:u.getAvailabilities()) {
             aDto.add(new AvailabilityDto(a));
         }
-        this.availabilities = this.SortDateAndMidday(aDto);
+
+        try {
+            this.availabilities = this.SortDateAndMidday(aDto);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private List<AvailabilityDto> SortDateAndMidday(List<AvailabilityDto> a){
+    private List<AvailabilityDto> SortDateAndMidday(List<AvailabilityDto> a) throws Exception {
         Collections.sort(a);
 
         List<AvailabilityDto> one = new ArrayList<>();
         List<AvailabilityDto> two = new ArrayList<>();
+
         for (AvailabilityDto b:a) {
             if(b.getBeforeMidday() == true) {
                 one.add(b);
@@ -34,6 +40,11 @@ public class UserDTO {
                 two.add(b);
             }
         }
+
+        if (one.size() != two.size()){
+            throw new Exception("INNER ERROR - One or more days don't have 2 availabilities");
+        }
+
         List<AvailabilityDto> three = new ArrayList<>();
         int c = one.size();
         for (int i = 0; i < c; i++) {

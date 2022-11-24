@@ -1,5 +1,6 @@
 package YenloBE.YenloBE.Model;
 
+import YenloBE.YenloBE.Enums.Status;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,13 +22,15 @@ public class Availability {
     private int id;
     @OneToOne
     public User user;
-    public Integer status;
-    //public Enum<> status;
+    //public Integer status;
+    @Enumerated(EnumType.STRING)
+    @Column(name="status")
+    public Status status;
     @DateTimeFormat(pattern = "yyyy.MM.dd")
     public Date dateTime;
     public Boolean beforeMidday = false;
 
-    public Availability(int id, User userid, Integer status, Date dateTime, Boolean _beforeMidday) {
+    public Availability(int id, User userid, Status status, Date dateTime, Boolean _beforeMidday) {
         this.id = id;
         this.user = userid;
         this.status = status;

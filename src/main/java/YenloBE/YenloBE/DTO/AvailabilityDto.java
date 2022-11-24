@@ -1,5 +1,6 @@
 package YenloBE.YenloBE.DTO;
 
+import YenloBE.YenloBE.Enums.Status;
 import YenloBE.YenloBE.Model.Availability;
 import YenloBE.YenloBE.Model.User;
 import lombok.Getter;
@@ -15,7 +16,7 @@ import java.util.Date;
 public class AvailabilityDto implements Comparable<AvailabilityDto>{
     @DateTimeFormat(pattern = "yyyy.MM.dd")
     public Date dateTime;
-    public Integer status;
+    public Status status;
     public Boolean beforeMidday;
     public AvailabilityDto(Availability a) {
         Calendar cal = Calendar.getInstance();

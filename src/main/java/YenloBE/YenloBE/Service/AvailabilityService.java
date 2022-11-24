@@ -17,4 +17,5 @@ public interface AvailabilityService {
     Optional<List<Availability>> getAvailabilityOneWeek(Date begin_date, Integer user_id);
 
     Optional<List<Availability>> getAvailabilityBetween(Integer user_id, Date start_date, Date end_date);
+    String updateAvailabilityDay(Availability availability);
 }
