@@ -15,7 +15,7 @@ public interface TeamService {
 
     Team deleteUserFromTeam(Team team);
 
-    List<Team> getUserTeams(Integer teamId, Integer userId);
+    List<Team> getUserTeams(User user);
 
     Team updateTeam(Team team, Team teamDetails);
 
