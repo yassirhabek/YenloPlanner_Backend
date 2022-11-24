@@ -49,8 +49,7 @@ public class AvailabilityController {
             Date date1 = (new SimpleDateFormat("yyyy/MM/dd").parse(date));
 
             User user = userService.findById(user_id);
-            user.setAvailabilities(availabilityService.getAvailabilityOneDay(date1, user_id).orElseThrow());
-            UserDTO u = new UserDTO(user);
+            UserDTO u = new UserDTO(user, availabilityService.getAvailabilityOneDay(date1, user_id).orElseThrow());
             return u;
         } else {
             return null;
@@ -63,8 +62,7 @@ public class AvailabilityController {
             Date date1 = (new SimpleDateFormat("yyyy/MM/dd").parse(date));
 
             User user = userService.findById(user_id);
-            user.setAvailabilities(availabilityService.getAvailabilityOneWeek(date1, user_id).orElseThrow());
-            UserDTO u = new UserDTO(user);
+            UserDTO u = new UserDTO(user, availabilityService.getAvailabilityOneWeek(date1, user_id).orElseThrow());
             return u;
         } else {
             return null;
@@ -78,12 +76,16 @@ public class AvailabilityController {
             Date endDate = (new SimpleDateFormat("yyyy/MM/dd").parse(end_date));
 
             User user = userService.findById(user_id);
-            user.setAvailabilities(availabilityService.getAvailabilityBetween(user_id, startDate, endDate).orElseThrow());
-            UserDTO u = new UserDTO(user);
+            UserDTO u = new UserDTO(user, availabilityService.getAvailabilityBetween(user_id, startDate, endDate).orElseThrow());
             return u;
         } else {
             return null;
         }
+    }
+
+    @GetMapping("/office")
+    public Integer getOfficeStatus(){
+        return availabilityService.getOfficeStatus();
     }
 
     // Delete Methods

@@ -1,5 +1,6 @@
 package YenloBE.YenloBE.Service;
 
+import YenloBE.YenloBE.Enums.Status;
 import YenloBE.YenloBE.Exception.ApiRequestException;
 import YenloBE.YenloBE.Model.Availability;
 import YenloBE.YenloBE.Model.User;
@@ -59,5 +60,11 @@ public class AvailabilityServiceImpl implements AvailabilityService{
 
         availabilityRepo.save(availability);
         return "";
+    }
+
+    @Override
+    public Integer getOfficeStatus() {
+        List<Availability> availabilities = availabilityRepo.findAllByStatus(Status.OFFICE);
+        return availabilities.size();
     }
 }

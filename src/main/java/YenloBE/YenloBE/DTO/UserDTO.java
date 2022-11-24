@@ -2,21 +2,23 @@ package YenloBE.YenloBE.DTO;
 
 import YenloBE.YenloBE.Model.Availability;
 import YenloBE.YenloBE.Model.User;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+@Setter
 public class UserDTO {
     public int id;
     public String name;
     public List<AvailabilityDto> availabilities;
 
-    public UserDTO(User u) {
+    public UserDTO(User u, List<Availability> availabilities) {
         this.id = u.getId();
         this.name = u.getName();
         List<AvailabilityDto> aDto = new ArrayList<>();
-        for (Availability a:u.getAvailabilities()) {
+        for (Availability a:availabilities) {
             aDto.add(new AvailabilityDto(a));
         }
 

@@ -28,8 +28,8 @@ public class User {
     public String photoId;
     public Boolean isManager = false;
 
-    @OneToMany(mappedBy = "id")
-    public List<Availability> availabilities;
+//    @OneToMany(mappedBy = "id")
+//    public List<Availability> availabilities;
 
     public User(int id, String email, String password, String name, Boolean isManager, String photoid) {
         this.id = id;
