@@ -53,4 +53,11 @@ public class AvailabilityServiceImpl implements AvailabilityService{
         }
         return Optional.ofNullable(availabilities);
     }
+
+    @Override
+    public String updateAvailabilityDay(Availability availability) {
+
+        availabilityRepo.save(availability);
+        return "";
+    }
 }
