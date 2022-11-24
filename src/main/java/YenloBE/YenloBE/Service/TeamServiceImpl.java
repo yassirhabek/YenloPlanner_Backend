@@ -20,12 +20,8 @@ public class TeamServiceImpl implements TeamService{
     @Override
     public String addTeam(Team team)
     {
-        if (checkTeamExists(team.getId()))
-        {
-            teamRepo.save(team);
-            return "Team created.";
-        }
-        return "Team already exists by that ID!";
+        teamRepo.save(team);
+        return "Team created";
     }
 
     @Override
