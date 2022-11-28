@@ -67,4 +67,9 @@ public class AvailabilityServiceImpl implements AvailabilityService{
         List<Availability> availabilities = availabilityRepo.findAllByStatus(Status.OFFICE);
         return availabilities.size();
     }
+
+    @Override
+    public Optional<Availability> findById(Integer id) {
+        return availabilityRepo.findById(id);
+    }
 }

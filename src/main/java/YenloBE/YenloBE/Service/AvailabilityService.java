@@ -1,6 +1,7 @@
 package YenloBE.YenloBE.Service;
 
 import YenloBE.YenloBE.Model.Availability;
+import YenloBE.YenloBE.Model.User;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
@@ -19,4 +20,5 @@ public interface AvailabilityService {
     Optional<List<Availability>> getAvailabilityBetween(Integer user_id, Date start_date, Date end_date);
     String updateAvailabilityDay(Availability availability);
     Integer getOfficeStatus();
+    Optional<Availability> findById(Integer id);
 }

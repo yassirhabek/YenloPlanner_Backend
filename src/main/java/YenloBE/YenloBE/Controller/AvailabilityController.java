@@ -116,8 +116,8 @@ public class AvailabilityController {
     // Update Methods
     @PutMapping("/update/day")
     public String updateAvailabilityDay(@RequestBody Availability availability){
-        if (userService.findById(availability.getId()) == null){
-            return "No availability found for id: " + availability.getId();
+        if (userService.findById(availability.getUser().getId()) == null && availabilityService.findById(availability.getId()) == null){
+            return "No availability found for user id: " + availability.getUser().getId() + " and availability id " + availability.getId();
         } else {
             availabilityService.updateAvailabilityDay(availability);
             return "Availability updated";
