@@ -1,14 +1,18 @@
 package YenloBE.YenloBE.Controller;
 
+import YenloBE.YenloBE.DTO.UserAvatarDTO;
 import YenloBE.YenloBE.Exception.ApiRequestException;
+import YenloBE.YenloBE.Model.Photo;
 import YenloBE.YenloBE.Model.Team;
 import YenloBE.YenloBE.Model.User;
+import YenloBE.YenloBE.Service.PhotoService;
 import YenloBE.YenloBE.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -17,11 +21,24 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private PhotoService photoService;
 
     // Add Methods
     @PostMapping
     public String createUser(@Valid @RequestBody User user, @RequestParam Integer adminId) {
         return userService.createUser(user, adminId);
+    }
+
+    @GetMapping("/user-info")
+    public UserAvatarDTO getUserAvatar(@RequestParam Integer userId) {
+        User user = userService.findById(userId);
+        Photo photo = photoService.getPhoto(user.photoId);
+        byte[] bytes = photo.getData().getData();
+        String s = Base64.getEncoder().encodeToString(bytes);
+        String string = "data:image/png;base64, " + s;
+        UserAvatarDTO userAvatarDTO = new UserAvatarDTO(user, string);
+        return userAvatarDTO;
     }
 
     // Read Methods
