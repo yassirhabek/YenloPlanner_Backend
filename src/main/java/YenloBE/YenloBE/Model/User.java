@@ -4,10 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.mapping.Set;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -28,8 +26,7 @@ public class User {
     public String photoId;
     public Boolean isManager = false;
 
-//    @OneToMany(mappedBy = "id")
-//    public List<Availability> availabilities;
+    public Boolean isSick = false;
 
     public User(int id, String email, String password, String name, Boolean isManager, String photoid) {
         this.id = id;

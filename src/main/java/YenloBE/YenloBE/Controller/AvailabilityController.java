@@ -31,6 +31,9 @@ public class AvailabilityController {
         if (userService.findById(availability.getUser().getId()) == null) {
             throw new ApiRequestException("User not found by ID");
         } else {
+//            if (userService.findById(availability.getUser().getId()).isSick == true){
+//                availability.status = Status.SICK;
+//            }
             return availabilityService.addAvailabilityOneDay(availability);
         }
     }
@@ -102,7 +105,7 @@ public class AvailabilityController {
         }
     }
 
-    @PutMapping("/update/month/{id}")
+    @PutMapping("/update/month")
     public String updateAvailabilityMonth(@RequestBody List<Availability> availabilities){
         for (Availability a:availabilities) {
             this.updateAvailabilityDay(a);
