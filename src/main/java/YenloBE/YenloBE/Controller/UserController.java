@@ -30,6 +30,12 @@ public class UserController {
         return userService.createUser(user, adminId);
     }
 
+    // Read Methods
+    @GetMapping
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
     @GetMapping("/user-info")
     public UserAvatarDTO getUserAvatar(@RequestParam Integer userId) {
         User user = userService.findById(userId);
@@ -39,12 +45,6 @@ public class UserController {
         String string = "data:image/png;base64, " + s;
         UserAvatarDTO userAvatarDTO = new UserAvatarDTO(user, string);
         return userAvatarDTO;
-    }
-
-    // Read Methods
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
