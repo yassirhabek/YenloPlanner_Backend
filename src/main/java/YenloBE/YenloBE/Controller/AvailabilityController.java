@@ -2,6 +2,7 @@ package YenloBE.YenloBE.Controller;
 
 import YenloBE.YenloBE.DTO.AvailabilityDto;
 import YenloBE.YenloBE.DTO.UserDTO;
+import YenloBE.YenloBE.Enums.Status;
 import YenloBE.YenloBE.Exception.ApiRequestException;
 import YenloBE.YenloBE.Model.Availability;
 import YenloBE.YenloBE.Model.User;
@@ -107,5 +108,24 @@ public class AvailabilityController {
             this.updateAvailabilityDay(a);
         }
         return "Updated Availabilities";
+    }
+
+    @PostMapping("/leave")
+    public String addLeaveBetween(@RequestParam Integer user_id, @RequestParam String start_date, @RequestParam String end_date) throws ApiRequestException, ParseException{
+        if (user_id != null && start_date != null && end_date != null) {
+            Date startDate = (new SimpleDateFormat("yyyy/MM/dd").parse(start_date));
+            Date endDate = (new SimpleDateFormat("yyyy/MM/dd").parse(end_date));
+
+            User user = userService.findById(user_id);
+            Optional<List<Availability>> availabilities = availabilityService.getAvailabilityBetween(user_id, startDate, endDate);
+            availabilities.get().forEach(item ->
+            {
+                item.setStatus(Status.LEAVE);
+                availabilityService.addAvailabilityOneDay(item);
+            });
+            return "Changed status to leave";
+        } else {
+            return "No valid user_id/start_date/end_date";
+        }
     }
 }
