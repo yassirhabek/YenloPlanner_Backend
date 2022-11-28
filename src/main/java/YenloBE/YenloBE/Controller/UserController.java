@@ -20,8 +20,8 @@ public class UserController {
 
     // Add Methods
     @PostMapping
-    public String createUser(@Valid @RequestBody User user) {
-        return userService.createUser(user);
+    public String createUser(@Valid @RequestBody User user, @RequestParam Integer adminId) {
+        return userService.createUser(user, adminId);
     }
 
     // Read Methods

@@ -7,6 +7,7 @@ import YenloBE.YenloBE.Repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -24,15 +25,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String createUser(User user)
+    public String createUser(User user, Integer adminId)
     {
-        if (!checkUserExists(user))
+        if (!checkUserExists(user) && findById(adminId).isManager && userRepo.findByEmail(user.email) == null)
         {
             userRepo.save(user);
             return "User created.";
         }
         else {
-            return "User already exists!";
+            return "Action not permitted.";
         }
     }
 

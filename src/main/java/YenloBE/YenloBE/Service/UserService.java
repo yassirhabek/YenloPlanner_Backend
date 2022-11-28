@@ -11,7 +11,7 @@ import java.util.List;
 public interface UserService {
     List<User> getAllUsers();
 
-    String createUser(User user);
+    String createUser(User user, Integer adminId);
 
     User findById(Integer id);
 

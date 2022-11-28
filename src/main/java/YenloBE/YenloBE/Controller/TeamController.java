@@ -115,4 +115,9 @@ public class TeamController {
         }
         return false;
     }
+
+    @DeleteMapping
+    public String deleteTeam(@RequestParam Integer teamId) {
+        return teamService.deleteTeam(teamId);
+    }
 }

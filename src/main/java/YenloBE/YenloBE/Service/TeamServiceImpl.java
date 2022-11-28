@@ -20,8 +20,12 @@ public class TeamServiceImpl implements TeamService{
     @Override
     public String addTeam(Team team)
     {
-        teamRepo.save(team);
-        return "Team created";
+        if (teamRepo.findByName(team.getName()) != null) {
+            return "Record already exists.";
+        } else {
+            teamRepo.save(team);
+            return "Team created";
+        }
     }
 
     @Override
@@ -55,12 +59,14 @@ public class TeamServiceImpl implements TeamService{
         return teamRepo.save(team);
     }
 
-    // Checks
-    public Boolean checkTeamExists(Integer team_id)
-    {
-        if (teamRepo.findById(team_id).get() == null) {
-            return false;
+    @Override
+    public String deleteTeam(Integer teamId) {
+        if (findById(teamId) != null) {
+            teamRepo.delete(findById(teamId).get());
+            return "Deleted team.";
         }
-        return true;
+        else {
+            return "No records found.";
+        }
     }
 }

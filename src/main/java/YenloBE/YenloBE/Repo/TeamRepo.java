@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface TeamRepo extends JpaRepository<Team, Integer> {
         List<Team> findAllByUser(User user);
+        Team findByName(String teamName);
 }
