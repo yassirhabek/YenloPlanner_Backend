@@ -55,6 +55,20 @@ public class TeamController {
         return teamService.addTeam(team);
     }
 
+    @PostMapping("/user")
+    public Team addTeamUser(Integer teamId, Integer userId) throws ApiRequestException {
+        if (teamService.findById(teamId) != null && userService.findById(userId) != null) {
+            Optional<Team> team = teamService.findById(teamId);
+            User user = userService.findById(userId);
+            if (checkTeamContainsUser(user, teamId) == false) {
+                team.get().user.add(user);
+            }
+            return teamService.addTeamUser(team.get());
+        }
+        else {
+            throw new ApiRequestException("No records found.");
+        }
+    }
     // Read Methods
 
     @GetMapping("/user-teams")
@@ -64,6 +78,11 @@ public class TeamController {
     }
 
     // Delete Methods
+
+    @DeleteMapping
+    public String deleteTeam(@RequestParam Integer teamId) {
+        return teamService.deleteTeam(teamId);
+    }
 
     @DeleteMapping("/user")
     public Team removeUserFromTeam(@RequestParam Integer teamId, @RequestParam Integer userId) throws ApiRequestException {
@@ -90,21 +109,9 @@ public class TeamController {
         }
     }
 
-    @PostMapping("/user")
-    public Team addTeamUser(Integer teamId, Integer userId) throws ApiRequestException {
-        if (teamService.findById(teamId) != null && userService.findById(userId) != null) {
-            Optional<Team> team = teamService.findById(teamId);
-            User user = userService.findById(userId);
-            if (checkTeamContainsUser(user, teamId) == false) {
-                team.get().user.add(user);
-            }
-            return teamService.addTeamUser(team.get());
-        }
-        else {
-            throw new ApiRequestException("No records found.");
-        }
-    }
-    
+
+    // Checks
+
     public Boolean checkTeamContainsUser(User user, Integer teamId) {
         Team team = teamService.findById(teamId).get();
         for (int i = 0; i < team.user.toArray().length; i++) {
@@ -114,10 +121,5 @@ public class TeamController {
             }
         }
         return false;
-    }
-
-    @DeleteMapping
-    public String deleteTeam(@RequestParam Integer teamId) {
-        return teamService.deleteTeam(teamId);
     }
 }
