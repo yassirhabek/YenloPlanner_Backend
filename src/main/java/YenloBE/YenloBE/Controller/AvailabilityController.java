@@ -98,6 +98,10 @@ public class AvailabilityController {
             Date startDate = (new SimpleDateFormat("yyyy/MM/dd").parse(start_date));
             Date endDate = (new SimpleDateFormat("yyyy/MM/dd").parse(end_date));
 
+            if (endDate.before(startDate)){
+                throw new ApiRequestException("End date is before start date!");
+            }
+
             User user = userService.findById(user_id);
             UserDTO u = new UserDTO(user, availabilityService.getAvailabilityBetween(user_id, startDate, endDate).orElseThrow());
             return u;
