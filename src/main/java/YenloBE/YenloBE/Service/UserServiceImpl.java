@@ -70,6 +70,11 @@ public class UserServiceImpl implements UserService{
         return userRepo.findByName(username);
     }
 
+    @Override
+    public List<User> findAllManagers() {
+        return userRepo.findAllByIsManagerTrue();
+    }
+
     // Checks
     public Boolean checkUserExists(User newUser)
     {

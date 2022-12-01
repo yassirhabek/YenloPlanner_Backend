@@ -1,5 +1,6 @@
 package YenloBE.YenloBE.Service;
 
+import YenloBE.YenloBE.Enums.Status;
 import YenloBE.YenloBE.Model.Availability;
 import YenloBE.YenloBE.Model.User;
 import org.springframework.stereotype.Service;
@@ -21,4 +22,5 @@ public interface AvailabilityService {
     String updateAvailabilityDay(Availability availability);
     Integer getOfficeStatus();
     Optional<Availability> findById(Integer id);
+    Boolean getOfficeStatus(Integer userId, Date date);
 }

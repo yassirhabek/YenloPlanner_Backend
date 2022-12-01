@@ -72,4 +72,15 @@ public class AvailabilityServiceImpl implements AvailabilityService{
     public Optional<Availability> findById(Integer id) {
         return availabilityRepo.findById(id);
     }
+
+    @Override
+    public Boolean getOfficeStatus(Integer userId, Date date) {
+        Boolean available = false;
+        for (Availability a:availabilityRepo.findAllByDateTimeAndUserId(date, userId)) {
+            if (a.getStatus() == Status.OFFICE || a.getStatus() == Status.HOME){
+                available = true;
+            }
+        }
+        return available;
+    }
 }
