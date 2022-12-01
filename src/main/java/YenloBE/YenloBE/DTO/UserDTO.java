@@ -31,30 +31,24 @@ public class UserDTO {
 
     private List<AvailabilityDto> SortDateAndMidday(List<AvailabilityDto> a) throws Exception {
         Collections.sort(a);
+        List<AvailabilityDto> result = new ArrayList<>();
 
-        List<AvailabilityDto> one = new ArrayList<>();
-        List<AvailabilityDto> two = new ArrayList<>();
-
-        for (AvailabilityDto b:a) {
-            if(b.getBeforeMidday() == true) {
-                one.add(b);
-            } else {
-                two.add(b);
+        for (int i = 0; i < a.size(); i++) {
+            AvailabilityDto cur = a.get(i); // get current in list
+            if (i == a.size() - 1) { // stop loop when on last index
+                result.add(cur);
+                break;
             }
-        }
 
-        if (one.size() != two.size()){
-            throw new Exception("INNER ERROR - One or more days don't have 2 availabilities");
-        }
+            AvailabilityDto next = a.get(i+1); // get next in list
 
-        List<AvailabilityDto> three = new ArrayList<>();
-        int c = one.size();
-        for (int i = 0; i < c; i++) {
-            three.add(one.get(0));
-            one.remove(0);
-            three.add(two.get(0));
-            two.remove(0);
+            if ((cur.getDateTime().compareTo(next.getDateTime()) == 0) && !cur.getBeforeMidday()) {
+                result.add(next); // if the current date equals the next and beforeMidday is 0,
+                i++;              // add the next item to list and skip next loop
+            }
+
+            result.add(cur); // add current
         }
-        return three;
+        return result;
     }
 }
