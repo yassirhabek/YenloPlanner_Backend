@@ -72,7 +72,7 @@ public class AvailabilityController {
             Date date1 = (new SimpleDateFormat("yyyy/MM/dd").parse(date));
 
             User user = userService.findById(user_id);
-            UserDTO u = new UserDTO(user, availabilityService.getAvailabilityOneDay(date1, user_id).orElseThrow());
+            UserDTO u = new UserDTO(user, availabilityService.getAvailabilityOneDay(date1, user_id));
             return u;
         } else {
             return null;

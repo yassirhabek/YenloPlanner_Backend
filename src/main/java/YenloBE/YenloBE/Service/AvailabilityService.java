@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 public interface AvailabilityService {
     String addAvailabilityOneDay(Availability availability);
-    Optional<List<Availability>> getAvailabilityOneDay(Date date, Integer user_id);
+    List<Availability> getAvailabilityOneDay(Date date, Integer user_id);
 
     Optional<List<Availability>> getAvailabilityOneWeek(Date begin_date, Integer user_id);
 
