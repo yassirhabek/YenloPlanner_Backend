@@ -1,10 +1,12 @@
 package YenloBE.YenloBE.Controller;
 
 import YenloBE.YenloBE.DTO.UserAvatarDTO;
+import YenloBE.YenloBE.Enums.Status;
 import YenloBE.YenloBE.Exception.ApiRequestException;
 import YenloBE.YenloBE.Model.Photo;
 import YenloBE.YenloBE.Model.Team;
 import YenloBE.YenloBE.Model.User;
+import YenloBE.YenloBE.Service.AvailabilityService;
 import YenloBE.YenloBE.Service.PhotoService;
 import YenloBE.YenloBE.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +14,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -23,6 +29,9 @@ public class UserController {
     private UserService userService;
     @Autowired
     private PhotoService photoService;
+
+    @Autowired
+    private AvailabilityService availabilityService;
 
     // Add Methods
     @PostMapping
@@ -65,6 +74,18 @@ public class UserController {
         else {
             return userService.findByName(name);
         }
+    }
+
+    @GetMapping("/available-managers")
+    public List<User> findMangersNotSick(@RequestParam String date) throws ParseException {
+        Date _date = (new SimpleDateFormat("yyyy/MM/dd").parse(date));
+        List<User> users = new ArrayList<>();
+        for (User u:userService.findAllManagers()) {
+            if (availabilityService.getOfficeStatus(u.getId(), _date) == true) {
+                users.add(u);
+            }
+        }
+        return users;
     }
 
     // Delete Methods
