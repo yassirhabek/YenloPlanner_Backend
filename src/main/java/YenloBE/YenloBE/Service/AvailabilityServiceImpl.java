@@ -110,8 +110,8 @@ public class AvailabilityServiceImpl implements AvailabilityService{
     }
 
     @Override
-    public Integer getOfficeStatus() {
-        List<Availability> availabilities = availabilityRepo.findAllByStatus(Status.OFFICE);
+    public Integer getOfficeStatus(Date date) {
+        List<Availability> availabilities = availabilityRepo.findAllByStatusAndDateTime(Status.OFFICE, date);
         return availabilities.size();
     }
 

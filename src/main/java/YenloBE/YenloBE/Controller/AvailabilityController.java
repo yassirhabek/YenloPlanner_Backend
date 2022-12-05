@@ -111,8 +111,9 @@ public class AvailabilityController {
     }
 
     @GetMapping("/office")
-    public Integer getOfficeStatus(){
-        return availabilityService.getOfficeStatus();
+    public Integer getOfficeStatus(@RequestParam String date) throws ParseException {
+        Date date1 = (new SimpleDateFormat("yyyy/MM/dd").parse(date));
+        return availabilityService.getOfficeStatus(date1);
     }
 
     // Delete Methods
