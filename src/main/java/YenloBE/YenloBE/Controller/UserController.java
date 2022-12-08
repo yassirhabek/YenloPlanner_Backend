@@ -49,6 +49,11 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @GetMapping("/managers")
+    public List<User> getManagers() {
+        return userService.findAllManagers();
+    }
+
     @GetMapping("/user-info")
     public UserAvatarDTO getUserAvatar(@RequestParam Integer userId) {
         User user = userService.findById(userId);
@@ -81,7 +86,7 @@ public class UserController {
     }
 
     @GetMapping("/available-managers")
-    public List<User> findMangersNotSick(@RequestParam String date) throws ParseException {
+    public List<User> findManagersNotSick(@RequestParam String date) throws ParseException {
         Date _date = (new SimpleDateFormat("yyyy/MM/dd").parse(date));
         List<User> users = new ArrayList<>();
         for (User u:userService.findAllManagers()) {
