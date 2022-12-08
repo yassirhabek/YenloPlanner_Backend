@@ -19,7 +19,6 @@ public class AvailabilityDto implements Comparable<AvailabilityDto>{
     public Date dateTime;
     public Status status;
     public Boolean beforeMidday;
-    public Integer inOffice;
     public AvailabilityDto(Availability a) {
         Calendar cal = Calendar.getInstance();
         cal.setTime(a.getDateTime());
@@ -28,10 +27,6 @@ public class AvailabilityDto implements Comparable<AvailabilityDto>{
         this.dateTime = cal.getTime();
         this.status = a.getStatus();
         this.beforeMidday = a.getBeforeMidday();
-    }
-
-    public void setInOffice(Integer inOffice) {
-        this.inOffice = inOffice;
     }
 
     @Override
