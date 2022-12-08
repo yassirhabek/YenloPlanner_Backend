@@ -25,13 +25,17 @@ import java.util.List;
 @RequestMapping(path = "/user") // api path
 @CrossOrigin
 public class UserController {
-    @Autowired
     private UserService userService;
-    @Autowired
     private PhotoService photoService;
 
-    @Autowired
     private AvailabilityService availabilityService;
+
+    @Autowired
+    public UserController(UserService userService, PhotoService photoService, AvailabilityService availabilityService){
+        this.userService = userService;
+        this.photoService = photoService;
+        this.availabilityService = availabilityService;
+    }
 
     // Add Methods
     @PostMapping

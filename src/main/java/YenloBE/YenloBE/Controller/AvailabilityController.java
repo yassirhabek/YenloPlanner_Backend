@@ -21,10 +21,15 @@ import java.util.*;
 @RequestMapping(path = "/availability") // api path
 @CrossOrigin
 public class AvailabilityController {
+
+    private AvailabilityService availabilityService;
+    private UserService userService;
+
     @Autowired
-    AvailabilityService availabilityService;
-    @Autowired
-    UserService userService;
+    public AvailabilityController(AvailabilityService availabilityService, UserService userService){
+        this.availabilityService = availabilityService;
+        this.userService = userService;
+    }
 
     // Add Methods
     @PostMapping("/add/day")

@@ -17,8 +17,12 @@ import java.util.List;
 @CrossOrigin
 public class PhotoController {
 
-    @Autowired
     private PhotoService photoService;
+
+    @Autowired
+    public PhotoController(PhotoService photoService){
+        this.photoService = photoService;
+    }
 
     @PostMapping
     public String addPhoto(@RequestParam("image") MultipartFile image) throws IOException {

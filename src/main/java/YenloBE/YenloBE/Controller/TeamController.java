@@ -20,10 +20,14 @@ import java.util.Optional;
 @CrossOrigin
 public class TeamController {
 
-    @Autowired
     private TeamService teamService;
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public TeamController(TeamService teamService, UserService userService){
+        this.teamService = teamService;
+        this.userService = userService;
+    }
 
     @GetMapping("/{id}")
     public Team getTeam(@PathVariable Integer id) {
