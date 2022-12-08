@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public List<User> findAllManagers() {
-        return userRepo.findAllByIsManagerTrue();
+        return userRepo.findAllByIsManagerTrueAndIsSickFalse();
     }
 
     // Checks

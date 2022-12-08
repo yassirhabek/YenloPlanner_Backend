@@ -11,5 +11,5 @@ import java.util.List;
 public interface UserRepo extends JpaRepository<User, Integer> {
     User findByName(String name);
     User findByEmail(String email);
-    List<User> findAllByIsManagerTrue();
+    List<User> findAllByIsManagerTrueAndIsSickFalse();
 }
