@@ -75,6 +75,11 @@ public class UserServiceImpl implements UserService{
         return userRepo.findAllByIsManagerTrueAndIsSickFalse();
     }
 
+    @Override
+    public void saveUser(User user) {
+        userRepo.save(user);
+    }
+
     // Checks
     public Boolean checkUserExists(User newUser)
     {
