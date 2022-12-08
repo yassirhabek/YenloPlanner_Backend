@@ -10,6 +10,7 @@ import YenloBE.YenloBE.Service.AvailabilityService;
 import YenloBE.YenloBE.Service.PhotoService;
 import YenloBE.YenloBE.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,6 +41,17 @@ public class UserController {
     @PostMapping
     public String createUser(@Valid @RequestBody User user, @RequestParam Integer adminId) {
         return userService.createUser(user, adminId);
+    }
+
+    @PutMapping("/sick")
+    public ResponseEntity<String> callInSick(@RequestParam Boolean isSick, @RequestParam Integer userId) {
+        User user = userService.findById(userId);
+        if (user != null) {
+            user.isSick = isSick;
+            userService.saveUser(user);
+            return new ResponseEntity<>("User sickness updated.", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("No records found.", HttpStatus.BAD_REQUEST);
     }
 
     // Read Methods

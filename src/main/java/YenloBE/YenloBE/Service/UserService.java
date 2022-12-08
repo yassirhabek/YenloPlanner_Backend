@@ -23,4 +23,5 @@ public interface UserService {
 
     List<User> findAllManagers();
 
+    void saveUser(User user);
 }

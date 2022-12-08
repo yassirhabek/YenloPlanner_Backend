@@ -48,8 +48,8 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO) {
-        if (userRepo.findByName(registerDTO.getUsername()) != null) {
-            return new ResponseEntity<>("Username is taken.", HttpStatus.BAD_REQUEST);
+        if (userRepo.findByName(registerDTO.getUsername()) != null && userRepo.findByEmail(registerDTO.getEmail()) != null) {
+            return new ResponseEntity<>("Username/email is taken.", HttpStatus.BAD_REQUEST);
         }
 
         User user = new User();
