@@ -27,7 +27,6 @@ import java.util.List;
 public class UserController {
     private UserService userService;
     private PhotoService photoService;
-
     private AvailabilityService availabilityService;
 
     @Autowired
