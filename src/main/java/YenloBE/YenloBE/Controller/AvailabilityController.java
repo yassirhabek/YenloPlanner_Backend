@@ -1,6 +1,7 @@
 package YenloBE.YenloBE.Controller;
 
 import YenloBE.YenloBE.DTO.AvailabilityDto;
+import YenloBE.YenloBE.DTO.OfficeStatusDto;
 import YenloBE.YenloBE.DTO.UserDTO;
 import YenloBE.YenloBE.Enums.Status;
 import YenloBE.YenloBE.Exception.ApiRequestException;
@@ -111,9 +112,10 @@ public class AvailabilityController {
     }
 
     @GetMapping("/office")
-    public Integer getOfficeStatus(@RequestParam String date) throws ParseException {
-        Date date1 = (new SimpleDateFormat("yyyy/MM/dd").parse(date));
-        return availabilityService.getOfficeStatus(date1);
+    public List<OfficeStatusDto> getOfficeStatus(@RequestParam String start_date, @RequestParam String end_date) throws ParseException {
+        Date startDate = (new SimpleDateFormat("yyyy/MM/dd").parse(start_date));
+        Date endDate = (new SimpleDateFormat("yyyy/MM/dd").parse(end_date));
+        return availabilityService.getOfficeStatus(startDate, endDate);
     }
 
     // Delete Methods

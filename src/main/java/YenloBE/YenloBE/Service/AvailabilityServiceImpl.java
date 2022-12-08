@@ -1,5 +1,6 @@
 package YenloBE.YenloBE.Service;
 
+import YenloBE.YenloBE.DTO.OfficeStatusDto;
 import YenloBE.YenloBE.Enums.Status;
 import YenloBE.YenloBE.Exception.ApiRequestException;
 import YenloBE.YenloBE.Model.Availability;
@@ -110,9 +111,23 @@ public class AvailabilityServiceImpl implements AvailabilityService{
     }
 
     @Override
-    public Integer getOfficeStatus(Date date) {
-        List<Availability> availabilities = availabilityRepo.findAllByStatusAndDateTime(Status.OFFICE, date);
-        return availabilities.size();
+    public List<OfficeStatusDto> getOfficeStatus(Date startDate, Date endDate) {
+        List<Availability> availabilities = availabilityRepo.findAllByStatusAndDateTimeAndBeforeMiddayIsTrue(Status.OFFICE, startDate);
+        List<OfficeStatusDto> officeStatusDtos = new ArrayList<>();
+        Date date = startDate;
+        int id = 0;
+        for(int i = 0; i < 1;date = this.datePlusOne(date)){
+            List<Availability> availabilities1 = availabilityRepo.findAllByStatusAndDateTimeAndBeforeMiddayIsTrue(Status.OFFICE, date);
+            List<Availability> availabilities2 = availabilityRepo.findAllByStatusAndDateTimeAndBeforeMiddayIsFalse(Status.OFFICE, date);
+            officeStatusDtos.add(new OfficeStatusDto(id, availabilities1.size(), date));
+            id++;
+            officeStatusDtos.add(new OfficeStatusDto(id, availabilities2.size(), date));
+            id++;
+            if (date.toString().equals(endDate.toString())){
+                i++;
+            }
+        }
+        return officeStatusDtos;
     }
 
     @Override

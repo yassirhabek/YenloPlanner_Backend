@@ -1,5 +1,6 @@
 package YenloBE.YenloBE.Service;
 
+import YenloBE.YenloBE.DTO.OfficeStatusDto;
 import YenloBE.YenloBE.Enums.Status;
 import YenloBE.YenloBE.Model.Availability;
 import YenloBE.YenloBE.Model.User;
@@ -20,7 +21,7 @@ public interface AvailabilityService {
 
     Optional<List<Availability>> getAvailabilityBetween(Integer user_id, Date start_date, Date end_date);
     String updateAvailabilityDay(Availability availability);
-    Integer getOfficeStatus(Date date);
+    List<OfficeStatusDto> getOfficeStatus(Date start_date, Date end_date);
     Optional<Availability> findById(Integer id);
     Boolean getOfficeStatus(Integer userId, Date date);
 }

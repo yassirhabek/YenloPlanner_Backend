@@ -14,5 +14,7 @@ public interface AvailabilityRepo extends JpaRepository<Availability, Integer> {
     List<Availability> findAllByDateTimeAndUserId(@Param("dateTime") Date dateTime, @Param("userId") Integer userId);
     List<Availability> findByUserIdAndDateTimeBetween(Integer userId, Date start, Date end);
     List<Availability> findAllByStatusAndDateTime(Status status, Date dateTime);
+    List<Availability> findAllByStatusAndDateTimeAndBeforeMiddayIsTrue(Status status, Date dateTime);
+    List<Availability> findAllByStatusAndDateTimeAndBeforeMiddayIsFalse(Status status, Date dateTime);
     List<Availability> findAllByUserIdAndDateTimeAndStatus(Integer userId, Date dateTime, Status status);
 }
