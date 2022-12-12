@@ -59,7 +59,7 @@ public class AvailabilityServiceImpl implements AvailabilityService{
     public Optional<List<Availability>> getAvailabilityBetween(Integer user_id, Date start_date, Date end_date) {
         List<Availability> availabilities = new ArrayList<>();
         Date date = start_date;
-        for(int i = 0; i < 1;date = this.datePlusOne(date)){
+        for(int i = 0; i < 1;date = this.datePlusDay(date)){
             for (Availability a:this.getAvailabilityOneDay(date, user_id)) {
                 availabilities.add(a);
             }
@@ -70,10 +70,18 @@ public class AvailabilityServiceImpl implements AvailabilityService{
         return Optional.ofNullable(availabilities);
     }
 
-    private Date datePlusOne(Date date){
+    private Date datePlusDay(Date date){
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         cal.add(Calendar.DATE, 1);
+        date = cal.getTime();
+        return date;
+    }
+
+    private Date datePlusHour(Date date){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.HOUR_OF_DAY, 1);
         date = cal.getTime();
         return date;
     }
@@ -86,16 +94,16 @@ public class AvailabilityServiceImpl implements AvailabilityService{
 
     @Override
     public List<OfficeStatusDto> getOfficeStatus(Date startDate, Date endDate) {
-        List<Availability> availabilities = availabilityRepo.findAllByStatusAndDateTimeAndBeforeMiddayIsTrue(Status.OFFICE, startDate);
         List<OfficeStatusDto> officeStatusDtos = new ArrayList<>();
         Date date = startDate;
         int id = 0;
-        for(int i = 0; i < 1;date = this.datePlusOne(date)){
+        for(int i = 0; i < 1;date = this.datePlusDay(date)){
             List<Availability> availabilities1 = availabilityRepo.findAllByStatusAndDateTimeAndBeforeMiddayIsTrue(Status.OFFICE, date);
             List<Availability> availabilities2 = availabilityRepo.findAllByStatusAndDateTimeAndBeforeMiddayIsFalse(Status.OFFICE, date);
-            officeStatusDtos.add(new OfficeStatusDto(id, availabilities1.size(), date));
+
+            officeStatusDtos.add(new OfficeStatusDto(id, availabilities1.size(), datePlusHour(date)));
             id++;
-            officeStatusDtos.add(new OfficeStatusDto(id, availabilities2.size(), date));
+            officeStatusDtos.add(new OfficeStatusDto(id, availabilities2.size(), datePlusHour(date)));
             id++;
             if (date.toString().equals(endDate.toString())){
                 i++;

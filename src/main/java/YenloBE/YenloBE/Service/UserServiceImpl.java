@@ -19,19 +19,6 @@ public class UserServiceImpl implements UserService{
         return userRepo.findAll();
     }
 
-//    @Override
-//    public String createUser(User user, Integer adminId)
-//    {
-//        if (!checkUserExists(user) && findById(adminId).isManager && userRepo.findByEmail(user.email) == null && userRepo.findByName(user.name) == null)
-//        {
-//            userRepo.save(user);
-//            return "User created.";
-//        }
-//        else {
-//            return "Action not permitted.";
-//        }
-//    }
-
     @Override
     public Optional<User> findById(Integer id)  {
         return Optional.ofNullable(userRepo.findById(id).get());
