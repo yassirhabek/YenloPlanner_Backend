@@ -6,8 +6,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -19,11 +17,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(length = 255)
+    @Column(length = 255, unique = true)
     public String email;
     @Column(length = 255)
     public String password;
-    @Column(length = 255)
+    @Column(length = 255, unique = true)
     public String name;
     @Column(length = 255)
     public String photoId;

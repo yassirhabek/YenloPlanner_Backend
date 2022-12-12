@@ -2,9 +2,7 @@ package YenloBE.YenloBE.DTO;
 
 import YenloBE.YenloBE.Enums.Status;
 import YenloBE.YenloBE.Model.Availability;
-import YenloBE.YenloBE.Model.User;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import org.springframework.format.annotation.DateTimeFormat;
 

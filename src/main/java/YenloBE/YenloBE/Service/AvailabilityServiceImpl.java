@@ -2,16 +2,11 @@ package YenloBE.YenloBE.Service;
 
 import YenloBE.YenloBE.DTO.OfficeStatusDto;
 import YenloBE.YenloBE.Enums.Status;
-import YenloBE.YenloBE.Exception.ApiRequestException;
 import YenloBE.YenloBE.Model.Availability;
-import YenloBE.YenloBE.Model.User;
 import YenloBE.YenloBE.Repo.AvailabilityRepo;
 import YenloBE.YenloBE.Repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -42,7 +37,6 @@ public class AvailabilityServiceImpl implements AvailabilityService{
         }
 
         return availabilities;
-        //return Optional.ofNullable(availabilityRepo.findAllByDateTimeAndUserId(date, user_id));
     }
 
     @Override
@@ -59,18 +53,6 @@ public class AvailabilityServiceImpl implements AvailabilityService{
             weekDate = cal.getTime();
         }
         return Optional.ofNullable(availabilities);
-//        List<Availability> availabilities = new ArrayList<>();
-//        Date weekDate = begin_date;
-//        for (int i = 0; i < 5; i++) {
-//            for (Availability a:availabilityRepo.findAllByDateTimeAndUserId(weekDate, user_id)) {
-//                availabilities.add(a);
-//            };
-//            Calendar cal = Calendar.getInstance();
-//            cal.setTime(weekDate);
-//            cal.add(Calendar.DATE, 1);
-//            weekDate = cal.getTime();
-//        }
-//        return Optional.ofNullable(availabilities);
     }
 
     @Override
@@ -86,13 +68,6 @@ public class AvailabilityServiceImpl implements AvailabilityService{
             }
         }
         return Optional.ofNullable(availabilities);
-
-
-//        List<Availability> availabilities = new ArrayList<>();
-//        for (Availability a:availabilityRepo.findByUserIdAndDateTimeBetween(user_id, start_date, end_date)) {
-//            availabilities.add(a);
-//        }
-//        return Optional.ofNullable(availabilities);
     }
 
     private Date datePlusOne(Date date){
@@ -105,7 +80,6 @@ public class AvailabilityServiceImpl implements AvailabilityService{
 
     @Override
     public String updateAvailabilityDay(Availability availability) {
-
         availabilityRepo.save(availability);
         return "";
     }

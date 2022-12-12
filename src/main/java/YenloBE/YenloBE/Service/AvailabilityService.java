@@ -1,13 +1,8 @@
 package YenloBE.YenloBE.Service;
 
 import YenloBE.YenloBE.DTO.OfficeStatusDto;
-import YenloBE.YenloBE.Enums.Status;
 import YenloBE.YenloBE.Model.Availability;
-import YenloBE.YenloBE.Model.User;
 import org.springframework.stereotype.Service;
-
-import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;

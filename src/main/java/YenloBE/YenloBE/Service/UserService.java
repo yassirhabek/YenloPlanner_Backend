@@ -6,16 +6,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface UserService {
     List<User> getAllUsers();
 
-    String createUser(User user, Integer adminId);
+//    String createUser(User user, Integer adminId);
 
-    User findById(Integer id);
+    Optional<User> findById(Integer id);
 
-    String updateUser(User user, User userDetails);
+    String updateUser(User user);
 
     String deleteUser(User user);
 

@@ -5,7 +5,6 @@ import YenloBE.YenloBE.DTO.LoginDTO;
 import YenloBE.YenloBE.DTO.RegisterDTO;
 import YenloBE.YenloBE.Model.User;
 import YenloBE.YenloBE.Repo.UserRepo;
-import YenloBE.YenloBE.Security.SecurityConfig;
 import YenloBE.YenloBE.Security.TokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,7 +48,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterDTO registerDTO) {
         if (userRepo.findByName(registerDTO.getUsername()) != null && userRepo.findByEmail(registerDTO.getEmail()) != null) {
-            return new ResponseEntity<>("Username/email is taken.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Username/email is already taken.", HttpStatus.BAD_REQUEST);
         }
 
         User user = new User();

@@ -1,14 +1,14 @@
 package YenloBE.YenloBE.Controller;
 
 import YenloBE.YenloBE.DTO.TeamDTO;
-import YenloBE.YenloBE.DTO.UserDTO;
 import YenloBE.YenloBE.Exception.ApiRequestException;
-import YenloBE.YenloBE.Model.Availability;
 import YenloBE.YenloBE.Model.Team;
 import YenloBE.YenloBE.Model.User;
 import YenloBE.YenloBE.Service.TeamService;
 import YenloBE.YenloBE.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -60,24 +60,29 @@ public class TeamController {
     }
 
     @PostMapping("/user")
-    public Team addTeamUser(Integer teamId, Integer userId) throws ApiRequestException {
-        if (teamService.findById(teamId) != null && userService.findById(userId) != null) {
-            Optional<Team> team = teamService.findById(teamId);
-            User user = userService.findById(userId);
-            if (checkTeamContainsUser(user, teamId) == false) {
-                team.get().user.add(user);
-            }
-            return teamService.addTeamUser(team.get());
+    public ResponseEntity<?> addTeamUser(@RequestParam Integer teamId, @RequestParam Integer userId) throws ApiRequestException {
+        if (teamService.findById(teamId) == null){
+            return new ResponseEntity<>("Invalid teamid", HttpStatus.BAD_REQUEST);
         }
-        else {
-            throw new ApiRequestException("No records found.");
+
+        if (userService.findById(userId) == null){
+            return new ResponseEntity<>("Invalid userid", HttpStatus.BAD_REQUEST);
+        }
+
+        if (checkTeamContainsUser(userId, teamId) == false){
+            Team team = teamService.findById(teamId).get();
+            User user = userService.findById(userId).get();
+            team.user.add(user);
+            return new ResponseEntity<>("User added to team", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("User is already in this team", HttpStatus.BAD_REQUEST);
         }
     }
     // Read Methods
 
     @GetMapping("/user-teams")
     public List<Team> getUserTeams(@RequestParam Integer userId) {
-        User user = userService.findById(userId);
+        User user = userService.findById(userId).get();
         return teamService.getUserTeams(user);
     }
 
@@ -89,16 +94,21 @@ public class TeamController {
     }
 
     @DeleteMapping("/user")
-    public Team removeUserFromTeam(@RequestParam Integer teamId, @RequestParam Integer userId) throws ApiRequestException {
-        if (teamService.findById(teamId) != null && userService.findById(userId) != null) {
-            Optional<Team> team = teamService.findById(teamId);
-            User user = userService.findById(userId);
-            team.get().user.remove(user);
-            return teamService.deleteUserFromTeam(team.get());
+    public ResponseEntity<String> removeUserFromTeam(@RequestParam Integer teamId, @RequestParam Integer userId) {
+        if (userService.findById(userId) == null){
+            return new ResponseEntity<>("Invalid userid", HttpStatus.BAD_REQUEST);
         }
-        else {
-            throw new ApiRequestException("No records found.");
+        if (teamService.findById(teamId) == null){
+            return new ResponseEntity<>("Invalid teamid", HttpStatus.BAD_REQUEST);
         }
+
+        Team team = teamService.findById(teamId).get();
+        User user = userService.findById(userId).get();
+
+        team.user.remove(user);
+        teamService.deleteUserFromTeam(team);
+
+        return new ResponseEntity<>("User removed from team", HttpStatus.OK);
     }
 
     // Update Methods
@@ -116,7 +126,8 @@ public class TeamController {
 
     // Checks
 
-    public Boolean checkTeamContainsUser(User user, Integer teamId) {
+    public Boolean checkTeamContainsUser(Integer userId, Integer teamId) {
+        User user = userService.findById(userId).get();
         Team team = teamService.findById(teamId).get();
         for (int i = 0; i < team.user.toArray().length; i++) {
             if (team.user.toArray()[i].equals(user))

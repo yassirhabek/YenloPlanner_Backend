@@ -3,11 +3,8 @@ package YenloBE.YenloBE.Service;
 import YenloBE.YenloBE.Model.Team;
 import YenloBE.YenloBE.Model.User;
 import YenloBE.YenloBE.Repo.TeamRepo;
-import YenloBE.YenloBE.Repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 

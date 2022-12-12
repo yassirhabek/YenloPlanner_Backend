@@ -1,10 +1,8 @@
 package YenloBE.YenloBE.Controller;
 
 import YenloBE.YenloBE.DTO.UserAvatarDTO;
-import YenloBE.YenloBE.Enums.Status;
 import YenloBE.YenloBE.Exception.ApiRequestException;
 import YenloBE.YenloBE.Model.Photo;
-import YenloBE.YenloBE.Model.Team;
 import YenloBE.YenloBE.Model.User;
 import YenloBE.YenloBE.Service.AvailabilityService;
 import YenloBE.YenloBE.Service.PhotoService;
@@ -37,21 +35,17 @@ public class UserController {
         this.availabilityService = availabilityService;
     }
 
-    // Add Methods
-    @PostMapping
-    public String createUser(@Valid @RequestBody User user, @RequestParam Integer adminId) {
-        return userService.createUser(user, adminId);
-    }
-
     @PutMapping("/sick")
     public ResponseEntity<String> callInSick(@RequestParam Boolean isSick, @RequestParam Integer userId) {
-        User user = userService.findById(userId);
-        if (user != null) {
-            user.isSick = isSick;
-            userService.saveUser(user);
-            return new ResponseEntity<>("User sickness updated.", HttpStatus.OK);
+        if (userService.findById(userId) == null){
+            return new ResponseEntity<>("Invalid userid", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>("No records found.", HttpStatus.BAD_REQUEST);
+
+        User user = userService.findById(userId).get();
+
+        user.isSick = isSick;
+        userService.saveUser(user);
+        return new ResponseEntity<>("User is now marked as sick", HttpStatus.OK);
     }
 
     // Read Methods
@@ -66,34 +60,37 @@ public class UserController {
     }
 
     @GetMapping("/user-info")
-    public UserAvatarDTO getUserAvatar(@RequestParam Integer userId) {
-        User user = userService.findById(userId);
+    public ResponseEntity<?> getUserAvatar(@RequestParam Integer userId) {
+        if (userService.findById(userId) == null){
+            return new ResponseEntity<>("Invalid userid", HttpStatus.BAD_REQUEST);
+        }
+
+        User user = userService.findById(userId).get();
         Photo photo = photoService.getPhoto(user.photoId);
         byte[] bytes = photo.getData().getData();
         String s = Base64.getEncoder().encodeToString(bytes);
         String string = "data:image/png;base64, " + s;
         UserAvatarDTO userAvatarDTO = new UserAvatarDTO(user, string);
-        return userAvatarDTO;
+
+        return new ResponseEntity<>(userAvatarDTO, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public User findById(@PathVariable Integer id) throws ApiRequestException {
-        if (userService.findById(id) == null) {
-            throw new ApiRequestException("No records found.");
+    public ResponseEntity<?> findById(@PathVariable Integer id) throws ApiRequestException {
+        if (userService.findById(id) == null){
+            return new ResponseEntity<>("Invalid userid", HttpStatus.BAD_REQUEST);
         }
-        else {
-            return userService.findById(id);
-        }
+
+        return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
     }
 
     @GetMapping("/name")
-    public User findByName(@RequestParam String name) throws ApiRequestException {
-        if (userService.findByName(name) == null) {
-            throw new ApiRequestException("No records found.");
+    public ResponseEntity<?> findByName(@RequestParam String name) throws ApiRequestException {
+        if (userService.findByName(name) == null){
+            return new ResponseEntity<>("No user found with that name", HttpStatus.BAD_REQUEST);
         }
-        else {
-            return userService.findByName(name);
-        }
+
+        return new ResponseEntity<>(userService.findByName(name), HttpStatus.OK);
     }
 
     @GetMapping("/available-managers")
@@ -110,26 +107,19 @@ public class UserController {
 
     // Delete Methods
     @DeleteMapping
-    public String deleteUser(Integer id) throws ApiRequestException {
-        if (userService.findById(id) == null)
-        {
-            throw new ApiRequestException("User not found by ID " + id);
+    public ResponseEntity<String> deleteUser(Integer id) {
+        if (userService.findById(id) == null) {
+            return new ResponseEntity<>("Invalid usesrid", HttpStatus.BAD_REQUEST);
         }
-        else
-        {
-            return userService.deleteUser(userService.findById(id));
-        }
+        return new ResponseEntity<>(userService.deleteUser(userService.findById(id).get()), HttpStatus.OK);
     }
 
     // Update Methods
     @PutMapping
-    public String updateUser(Integer id, @RequestBody User userDetails) throws ApiRequestException {
-        if (userService.findById(id) == null) {
-            throw new ApiRequestException("User not found by ID " + id);
+    public ResponseEntity<String> updateUser(@Valid @RequestBody User user) throws ApiRequestException {
+        if (userService.findById(user.getId()) == null){
+            return new ResponseEntity<>("Invalid userid", HttpStatus.BAD_REQUEST);
         }
-        else {
-            User user = userService.findById(id);
-            return userService.updateUser(user, userDetails);
-        }
+        return new ResponseEntity<>(userService.updateUser(user), HttpStatus.OK);
     }
 }
