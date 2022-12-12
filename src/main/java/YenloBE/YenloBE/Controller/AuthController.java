@@ -6,6 +6,7 @@ import YenloBE.YenloBE.DTO.RegisterDTO;
 import YenloBE.YenloBE.Model.User;
 import YenloBE.YenloBE.Repo.UserRepo;
 import YenloBE.YenloBE.Security.TokenProvider;
+import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +15,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "/auth")
@@ -34,6 +32,21 @@ public class AuthController {
         this.userRepo = userRepo;
         this.passwordEncoder = passwordEncoder;
         this.tokenProvider = tokenProvider;
+    }
+
+    @GetMapping("/jwt")
+    public ResponseEntity<User> jwt(@RequestParam String token) { // get user from jwt
+
+        String name = Jwts.parser()
+                .setSigningKey("7158890107710441921695630644172561604793")
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+
+        User user = userRepo.findByName(name);
+
+        // Return user by token
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/login")
