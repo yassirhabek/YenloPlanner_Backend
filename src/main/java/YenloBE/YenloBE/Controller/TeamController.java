@@ -73,6 +73,7 @@ public class TeamController {
             Team team = teamService.findById(teamId).get();
             User user = userService.findById(userId).get();
             team.user.add(user);
+            teamService.addTeamUser(team);
             return new ResponseEntity<>("User added to team", HttpStatus.OK);
         } else {
             return new ResponseEntity<>("User is already in this team", HttpStatus.BAD_REQUEST);
