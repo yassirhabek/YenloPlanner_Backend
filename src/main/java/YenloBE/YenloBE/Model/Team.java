@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.List;
@@ -28,6 +30,7 @@ public class Team {
         inverseJoinColumns = {
             @JoinColumn(name = "user_id", referencedColumnName = "id")
         })
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public List<User> user;
 
     public Team(int id, String name) {
