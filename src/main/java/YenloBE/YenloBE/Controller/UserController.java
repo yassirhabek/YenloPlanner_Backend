@@ -3,9 +3,13 @@ package YenloBE.YenloBE.Controller;
 import YenloBE.YenloBE.DTO.UserAvatarDTO;
 import YenloBE.YenloBE.Exception.ApiRequestException;
 import YenloBE.YenloBE.Model.Photo;
+import YenloBE.YenloBE.Model.Role;
+import YenloBE.YenloBE.Model.Team;
 import YenloBE.YenloBE.Model.User;
+import YenloBE.YenloBE.Repo.RoleRepo;
 import YenloBE.YenloBE.Service.AvailabilityService;
 import YenloBE.YenloBE.Service.PhotoService;
+import YenloBE.YenloBE.Service.TeamService;
 import YenloBE.YenloBE.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,12 +31,16 @@ public class UserController {
     private UserService userService;
     private PhotoService photoService;
     private AvailabilityService availabilityService;
+    private TeamService teamService;
+    private RoleRepo roleRepo;
 
     @Autowired
-    public UserController(UserService userService, PhotoService photoService, AvailabilityService availabilityService){
+    public UserController(UserService userService, PhotoService photoService, AvailabilityService availabilityService, TeamService teamService, RoleRepo roleRepo) {
         this.userService = userService;
         this.photoService = photoService;
         this.availabilityService = availabilityService;
+        this.teamService = teamService;
+        this.roleRepo = roleRepo;
     }
 
     @PutMapping("/sick")
@@ -111,7 +119,26 @@ public class UserController {
         if (userService.findById(id) == null) {
             return new ResponseEntity<>("Invalid usesrid", HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity<>(userService.deleteUser(userService.findById(id).get()), HttpStatus.OK);
+        User user = userService.findById(id).get();
+        deleteUserFromTeams(user);
+        deleteUserFromUserRoles(user);
+        return new ResponseEntity<>(userService.deleteUser(user), HttpStatus.OK);
+    }
+
+    private void deleteUserFromTeams(User user) {
+        List<Team> teams = teamService.getUserTeams(user);
+        for (Team team:teams) {
+            team.user.remove(user);
+            teamService.deleteUserFromTeam(team);
+        }
+    }
+
+    private void deleteUserFromUserRoles(User user) {
+        List<Role> roles = roleRepo.findAll();
+        for (Role role:roles) {
+            role.User.remove(user);
+            roleRepo.save(role);
+        }
     }
 
     // Update Methods
