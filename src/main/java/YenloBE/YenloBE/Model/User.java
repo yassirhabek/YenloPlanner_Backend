@@ -15,6 +15,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Table(name = "users")
+@OnDelete(action = OnDeleteAction.CASCADE)
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
